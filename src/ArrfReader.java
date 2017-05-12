@@ -39,6 +39,11 @@ public class ArrfReader {
 
     private void readFile() {
 
+        /*
+        Reads data from an ARFF file, either in incremental or batch mode.
+        Typical code for batch usage:
+        */
+
         try {
             BufferedReader reader = new BufferedReader(new FileReader(this.filePath));
             this.dataInstances = new Instances(reader);
@@ -56,7 +61,7 @@ public class ArrfReader {
 
         ArrfReader reader = new ArrfReader("C:\\Users\\Vitor Esteves\\Documents\\IART\\data\\dataset.arff");
 
-        System.out.print(reader.getPhishingData(0).get(1));
+        System.out.println(reader.getPhishingData(0).get(1));
     }
 
     public ArrayList<Integer> getPhishingData(int number){
