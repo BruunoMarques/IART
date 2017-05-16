@@ -13,7 +13,11 @@ public class ArrfReader {
     private String filePath;
     private Instances dataInstances;
 
-    private ArrayList<ArrayList<Integer>> fullDataSet;
+    private ArrayList<ArrayList<Double>> fullDataSet;
+
+    public ArrayList<ArrayList<Double>> getFullDataSet() {
+        return fullDataSet;
+    }
 
     public ArrfReader(String filePath) {
         this.filePath = filePath;
@@ -23,15 +27,15 @@ public class ArrfReader {
         this.readDataSet();
     }
 
-    public ArrayList<Integer> readPhishingData(int instanceNum) {
-        ArrayList<Integer> data = new ArrayList<>();
+    public ArrayList<Double> readPhishingData(int instanceNum) {
+        ArrayList<Double> data = new ArrayList<>();
 
         List<String> dataString = Arrays.asList(this.dataInstances.instance(instanceNum).toString().split(","));
 
         for (int i = 0; i < dataString.size(); i++) {
             String s = dataString.get(i);
 
-                data.add(Integer.parseInt(s));
+                data.add(Double.parseDouble(s));
         }
 
         return data;
@@ -64,10 +68,8 @@ public class ArrfReader {
         System.out.println(reader.getPhishingData(0).get(1));
     }
 
-    public ArrayList<Integer> getPhishingData(int number){
-        ArrayList<Integer> ret = new ArrayList<>(this.fullDataSet.get(number));
-
-        return ret;
+    public ArrayList<Double> getPhishingData(int number){
+        return new ArrayList<>(this.fullDataSet.get(number));
     }
 
     private void readDataSet() {
