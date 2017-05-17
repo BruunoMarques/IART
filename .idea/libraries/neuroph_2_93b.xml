@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="neuroph-2.93b">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/libs/neuroph-2.93b" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="file://$PROJECT_DIR$/libs/neuroph-2.93b" recursive="false" />
+  </library>
+</component>

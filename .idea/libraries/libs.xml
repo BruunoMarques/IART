@@ -1,14 +1,10 @@
 <component name="libraryTable">
   <library name="libs">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/libs/neuroph-2.93b/libs/ajt-2.9.jar!/" />
-      <root url="jar://$PROJECT_DIR$/libs/neuroph-2.93b/libs/android-x.x.jar!/" />
-      <root url="jar://$PROJECT_DIR$/libs/neuroph-2.93b/libs/javaml-0.1.7.jar!/" />
-      <root url="jar://$PROJECT_DIR$/libs/neuroph-2.93b/libs/logback-core-1.1.2.jar!/" />
-      <root url="jar://$PROJECT_DIR$/libs/neuroph-2.93b/libs/slf4j-api-1.7.5.jar!/" />
-      <root url="jar://$PROJECT_DIR$/libs/neuroph-2.93b/libs/weka.jar!/" />
+      <root url="file://$PROJECT_DIR$/libs/neuroph-2.93b/libs" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
+    <jarDirectory url="file://$PROJECT_DIR$/libs/neuroph-2.93b/libs" recursive="false" />
   </library>
 </component>

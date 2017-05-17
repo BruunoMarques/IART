@@ -52,7 +52,6 @@ public class ArrfReader {
             BufferedReader reader = new BufferedReader(new FileReader(this.filePath));
             this.dataInstances = new Instances(reader);
             reader.close();
-
             dataInstances.setClassIndex(dataInstances.numAttributes() - 1);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -64,16 +63,16 @@ public class ArrfReader {
     public ArrayList<Double> getPhishing(int websiteNum)
     {
         ArrayList<Double> ret = new ArrayList<>();
-        double phishing = this.fullDataSet.get(websiteNum).get(30);
+        double bankrupt = this.fullDataSet.get(websiteNum).get(30);
 
-        if(phishing != 1d && phishing != 0d )
+        if(bankrupt != 1d && bankrupt != 0d )
         {
             ret.add(-1d);
         }
 
         else
         {
-            ret.add(phishing);
+            ret.add(bankrupt);
         }
 
         return ret;
@@ -95,7 +94,7 @@ public class ArrfReader {
 
     public static void main(String[] args) {
 
-        ArrfReader reader = new ArrfReader("/home/atomic/Downloads/dataset.arff");
+        ArrfReader reader = new ArrfReader("C:\\Users\\Vitor Esteves\\Documents\\IART\\data\\dataset.arff");
 
         System.out.println(reader.getPhishingData(1).get(1));
     }

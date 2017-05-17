@@ -2,6 +2,7 @@ import org.neuroph.core.NeuralNetwork;
 import org.neuroph.core.data.DataSet;
 import org.neuroph.core.data.DataSetRow;
 import org.neuroph.nnet.MultiLayerPerceptron;
+import org.neuroph.nnet.learning.BackPropagation;
 import org.neuroph.util.TransferFunctionType;
 
 import java.util.ArrayList;
@@ -15,27 +16,30 @@ public class Network {
         DataSet trainingSet = new DataSet(30, 1);
 
 
-        ArrfReader reader = new ArrfReader("/home/atomic/Desktop/IART/data/dataset.arff");
+        ArrfReader reader = new ArrfReader("C:\\Users\\Vitor Esteves\\Documents\\IART\\data\\dataset.arff");
 
-            for (int i = 0; i < reader.getFullDataSet().size(); i++) {
-                trainingSet.addRow(new DataSetRow(reader.getPhishingData(i), reader.getPhishing(i)));
-                System.out.print(reader.getPhishingData(i));
-            }
+        for (int i = 0; i < reader.getFullDataSet().size(); i++) {
+            trainingSet.addRow(new DataSetRow(reader.getPhishingData(i), reader.getPhishing(i)));
+        }
 
 // create multi layer perceptron
-        MultiLayerPerceptron myMlPerceptron = new MultiLayerPerceptron(TransferFunctionType.TANH, 30, 18, 1);
+        MultiLayerPerceptron myMlPerceptron = new MultiLayerPerceptron(TransferFunctionType.SIGMOID, 30, 18, 1);
 // learn the training set
-        myMlPerceptron.learn(trainingSet);
+
+        BackPropagation backPropagation = new BackPropagation();
+        backPropagation.setMaxIterations(10);
+
+        myMlPerceptron.learn(trainingSet, backPropagation);
 
 // test perceptron
         System.out.println("Testing trained neural network");
         testNeuralNetwork(myMlPerceptron, trainingSet);
 
 // save trained neural network
-        myMlPerceptron.save("Phishing_Websites.nnet");
+        myMlPerceptron.save("phishing_websites.nnet");
 
 // load saved neural network
-        NeuralNetwork loadedMlPerceptron = NeuralNetwork.createFromFile("Phishing_Websites.nnet");
+        NeuralNetwork loadedMlPerceptron = NeuralNetwork.createFromFile("phishing_websites.nnet");
 
 // test loaded neural network
         System.out.println("Testing loaded neural network");
