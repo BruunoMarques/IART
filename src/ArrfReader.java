@@ -61,20 +61,42 @@ public class ArrfReader {
         }
     }
 
-    public static void main(String[] args) {
+    public ArrayList<Double> getPhishing(int websiteNum)
+    {
+        ArrayList<Double> ret = new ArrayList<>();
+        double phishing = this.fullDataSet.get(websiteNum).get(30);
 
-        ArrfReader reader = new ArrfReader("C:\\Users\\Vitor Esteves\\Documents\\IART\\data\\dataset.arff");
+        if(phishing != 1d && phishing != 0d )
+        {
+            ret.add(-1d);
+        }
 
-        System.out.println(reader.getPhishingData(0).get(1));
+        else
+        {
+            ret.add(phishing);
+        }
+
+        return ret;
     }
 
+
     public ArrayList<Double> getPhishingData(int number){
-        return new ArrayList<>(this.fullDataSet.get(number));
+        ArrayList<Double> ret = new ArrayList<>(this.fullDataSet.get(number));
+        ret.remove(30);
+        return ret;
+
     }
 
     private void readDataSet() {
         for (int i = 0; i < this.dataInstances.numInstances() - 1; i++) {
             this.fullDataSet.add(readPhishingData(i));
         }
+    }
+
+    public static void main(String[] args) {
+
+        ArrfReader reader = new ArrfReader("/home/atomic/Downloads/dataset.arff");
+
+        System.out.println(reader.getPhishingData(1).get(1));
     }
 }
