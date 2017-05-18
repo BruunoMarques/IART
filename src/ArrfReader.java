@@ -35,7 +35,9 @@ public class ArrfReader {
         for (int i = 0; i < dataString.size(); i++) {
             String s = dataString.get(i);
 
+
                 data.add(Double.parseDouble(s));
+
         }
 
         return data;
@@ -63,17 +65,9 @@ public class ArrfReader {
     public ArrayList<Double> getPhishing(int websiteNum)
     {
         ArrayList<Double> ret = new ArrayList<>();
-        double bankrupt = this.fullDataSet.get(websiteNum).get(30);
+        double phishing = this.fullDataSet.get(websiteNum).get(30);
 
-        if(bankrupt != 1d && bankrupt != 0d )
-        {
-            ret.add(-1d);
-        }
-
-        else
-        {
-            ret.add(bankrupt);
-        }
+        ret.add(phishing);
 
         return ret;
     }
@@ -94,7 +88,7 @@ public class ArrfReader {
 
     public static void main(String[] args) {
 
-        ArrfReader reader = new ArrfReader("C:\\Users\\Vitor Esteves\\Documents\\IART\\data\\dataset.arff");
+        ArrfReader reader = new ArrfReader("/home/atomic/Desktop/IART/data/dataset.arff");
 
         System.out.println(reader.getPhishingData(1).get(1));
     }
