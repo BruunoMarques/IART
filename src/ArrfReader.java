@@ -35,7 +35,6 @@ public class ArrfReader {
         for (int i = 0; i < dataString.size(); i++) {
             String s = dataString.get(i);
 
-
                 data.add(Double.parseDouble(s));
 
         }
