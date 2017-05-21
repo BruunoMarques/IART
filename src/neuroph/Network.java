@@ -1,3 +1,5 @@
+package neuroph;
+
 import org.neuroph.core.NeuralNetwork;
 import org.neuroph.core.data.DataSet;
 import org.neuroph.core.data.DataSetRow;
@@ -32,7 +34,7 @@ public class Network implements LearningEventListener {
         }
 
 // create multi layer perceptron
-        MultiLayerPerceptron myMlPerceptron = new MultiLayerPerceptron(TransferFunctionType.SIGMOID, 30, 2, 1);
+        MultiLayerPerceptron myMlPerceptron = new MultiLayerPerceptron(TransferFunctionType.SIGMOID, 30, 21, 1);
 // learn the training set
 
         MomentumBackpropagation bp = new MomentumBackpropagation();
@@ -40,9 +42,9 @@ public class Network implements LearningEventListener {
 
         LearningRule learningRule = myMlPerceptron.getLearningRule();
 
-        //myMlPerceptron.getLearningRule().setMaxIterations(100);
+        bp.setNeuralNetwork(myMlPerceptron);
         bp.setMomentum(0.7);
-        bp.setLearningRate(0.001);
+        bp.setLearningRate(0.2);
 
         learningRule.addListener(this);
 
@@ -51,10 +53,9 @@ public class Network implements LearningEventListener {
 
         DataSet trainingDataset = dataSetList.get(0);
         DataSet testingDataset = dataSetList.get(1);
-        //DataSet validationDataset = dataSetList.get(2);
 
 
-        myMlPerceptron.learn(trainingDataset);
+        myMlPerceptron.learn(trainingDataset, bp);
 
 // test perceptron
         System.out.println("Testing trained neural network");
@@ -73,7 +74,9 @@ public class Network implements LearningEventListener {
     }
 
     public static void testNeuralNetwork(NeuralNetwork nnet, DataSet testSet) {
-
+        double test_size = 0;
+        double correctCounter = 0;
+        double accuracy = 0;
         for(DataSetRow dataRow : testSet.getRows()) {
             nnet.setInput(dataRow.getInput());
             nnet.calculate();
@@ -81,16 +84,24 @@ public class Network implements LearningEventListener {
             double desiredOutput = Double.parseDouble(Arrays.toString(dataRow.getDesiredOutput()).replace("[", "").replace("]", ""));
             double actualOutput = Double.parseDouble(Arrays.toString(networkOutput).replace("[", "").replace("]", ""));
             double diff = Math.abs(actualOutput - desiredOutput);
+            test_size+=1;
+            if(Math.abs(networkOutput[0] - dataRow.getDesiredOutput()[0]) < 0.05){
+                correctCounter += 1;
+            }
             System.out.println("\tDesired output: " + desiredOutput + " \t|\t Actual output: " + actualOutput + " \t|\t Difference: " + diff);
         }
+        accuracy = correctCounter / test_size;
+        System.out.println("\tAccuracy: " + accuracy);
+
 
     }
+
 
     @Override
     public void handleLearningEvent(LearningEvent event) {
         MomentumBackpropagation bp = (MomentumBackpropagation)event.getSource();
         System.out.println(bp.getCurrentIteration() + ". iteration : "+ bp.getTotalNetworkError() + " : ");
-        if (bp.getCurrentIteration()==2000)
+        if (bp.getCurrentIteration()==10)
             bp.stopLearning();
     }
 
