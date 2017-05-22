@@ -7,6 +7,7 @@ import org.neuroph.core.events.LearningEvent;
 import org.neuroph.core.events.LearningEventListener;
 import org.neuroph.core.learning.LearningRule;
 import org.neuroph.nnet.MultiLayerPerceptron;
+import org.neuroph.nnet.comp.neuron.BiasNeuron;
 import org.neuroph.nnet.learning.MomentumBackpropagation;
 import org.neuroph.util.TransferFunctionType;
 import org.neuroph.util.data.sample.SubSampling;
@@ -34,11 +35,17 @@ public class Network implements LearningEventListener {
         }
 
 // create multi layer perceptron
-        MultiLayerPerceptron myMlPerceptron = new MultiLayerPerceptron(TransferFunctionType.SIGMOID, 30, 21, 1);
+        MultiLayerPerceptron myMlPerceptron = new MultiLayerPerceptron(TransferFunctionType.TANH, 30, 2, 1);
+        //MultiLayerPerceptron myMlPerceptron = new MultiLayerPerceptron(TransferFunctionType.SIGMOID, 30, 2, 1);
 // learn the training set
+
+        //myMlPerceptron.getInputNeurons().add(new BiasNeuron());
 
         MomentumBackpropagation bp = new MomentumBackpropagation();
         myMlPerceptron.setLearningRule(bp);
+
+       // if( myMlPerceptron.getLearningRule() instanceof MomentumBackpropagation )
+         //   (myMlPerceptron.getLearningRule()).setBatchMode(true);
 
         LearningRule learningRule = myMlPerceptron.getLearningRule();
 
@@ -101,7 +108,7 @@ public class Network implements LearningEventListener {
     public void handleLearningEvent(LearningEvent event) {
         MomentumBackpropagation bp = (MomentumBackpropagation)event.getSource();
         System.out.println(bp.getCurrentIteration() + ". iteration : "+ bp.getTotalNetworkError() + " : ");
-        if (bp.getCurrentIteration()==10)
+        if (bp.getCurrentIteration()==500)
             bp.stopLearning();
     }
 
